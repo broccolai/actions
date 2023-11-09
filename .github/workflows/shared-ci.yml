@@ -124,6 +124,8 @@ jobs:
           path: ${{ inputs.artifacts-path }}
       - name: "upload artifact to release"
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: "${{ inputs.attach-artifacts-to-release && env.STATUS == 'release' && github.event_name == 'release' }}"
         with:
           files: ${{ inputs.artifacts-path }}
