@@ -97,7 +97,7 @@ jobs:
       - name: "execute gradle build"
         run: ./gradlew build
       - name: "determine status"
-        if: ${{ inputs.hangar-publish || inputs.modrinth-publish }}
+        if: ${{ inputs.hangar-publish || inputs.modrinth-publish || inputs.attach-artifacts-to-release }}
         run: |
           if [ "$(./gradlew properties | awk '/^version:/ { print $2; }' | grep '\-SNAPSHOT')" ]; then
             echo "STATUS=snapshot" >> $GITHUB_ENV
