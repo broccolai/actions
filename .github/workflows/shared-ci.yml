@@ -51,6 +51,10 @@ on:
         type: boolean
         required: false
         default: false
+      attach-artifacts-to-release:
+        type: boolean
+        required: false
+        default: false
     secrets:
       HANGAR_UPLOAD_KEY:
         required: false
@@ -118,3 +122,8 @@ jobs:
         with:
           name: artifacts
           path: ${{ inputs.artifacts-path }}
+      - name: "upload artifact to release"
+        uses: softprops/action-gh-release@v1
+        if: "${{ inputs.attach-artifacts-to-release && env.STATUS == 'release' && github.event_name == 'release' }}"
+        with:
+          files: ${{ inputs.artifacts-path }}
