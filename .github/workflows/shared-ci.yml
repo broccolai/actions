@@ -75,11 +75,11 @@ jobs:
           distribution: "temurin"
           java-version: "${{ inputs.jdk-version }}"
       - name: "setup gradle"
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v4
         if: ${{ inputs.setup-gradle }}
         # gradle-build-action doesn't support caching files in the project dir
       - name: "cache project local caches"
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         if: ${{ inputs.loom || inputs.paperweight || inputs.vanillagradle }}
         with:
           # we cache all three in the same tarball because they will probably have similar files which can compress better together
@@ -113,7 +113,7 @@ jobs:
           MODRINTH_TOKEN: "${{ secrets.MODRINTH_TOKEN }}"
           RELEASE_NOTES: "${{ github.event.release.body }}"
       - name: "upload artifacts"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ inputs.artifacts-path != '' }}
         with:
           name: artifacts
